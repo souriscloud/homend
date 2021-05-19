@@ -1,7 +1,7 @@
 import { NativeScriptConfig } from '@nativescript/core';
 
 export default {
-  id: 'org.nativescript.homend',
+  id: 'cloud.souris.homend',
   appPath: 'app',
   appResourcesPath: 'App_Resources',
   android: {

@@ -1,15 +1,15 @@
 {
-  "name": "@nativescript/template-blank-vue",
+  "name": "homend",
   "main": "app/app.js",
-  "displayName": "Blank",
-  "version": "8.0.4",
-  "description": "NativeScript Application",
-  "author": "NativeScript Team <oss@nativescript.org>",
-  "license": "SEE LICENSE IN <your-license-filename>",
-  "repository": "<fill-your-repository-here>",
-  "homepage": "https://github.com/NativeScript/nativescript-app-templates",
+  "displayName": "HomEnd",
+  "version": "0.0.1",
+  "description": "HomEnd @ Souris.CLOUD",
+  "author": "Souris.CLOUD <me@souris.cloud>",
+  "license": "MIT",
+  "repository": "https://github.com/souriscloud/homend",
+  "homepage": "https://github.com/souriscloud/homend",
   "bugs": {
-    "url": "https://github.com/NativeScript/NativeScript/issues"
+    "url": "https://github.com/souriscloud/homend/issues"
   },
   "publishConfig": {
     "access": "public"
@@ -23,29 +23,19 @@
     ".editorconfig",
     "jsconfig.json"
   ],
-  "keywords": [
-    "nstudio",
-    "nativescript",
-    "mobile",
-    "{N}",
-    "tns",
-    "vue",
-    "nativescript-vue",
-    "template",
-    "master-detail",
-    "detail",
-    "category-general"
-  ],
   "dependencies": {
+    "@nativescript-community/fonticon": "^3.0.0",
     "@nativescript/core": "~8.0.0",
     "@nativescript/theme": "~3.0.1",
-    "nativescript-vue": "~2.9.0"
+    "nativescript-ui-sidedrawer": "^9.0.3",
+    "nativescript-vue": "~2.9.0",
+    "vuex": "^3.6.2"
   },
   "devDependencies": {
+    "@nativescript/ios": "8.0.0",
     "@nativescript/webpack": "beta",
     "nativescript-vue-template-compiler": "~2.9.0",
     "sass": "^1.32.8"
   },
-  "private": "true",
-  "readme": "NativeScript Application"
+  "readme": "https://github.com/souriscloud/homend/README.md"
 }
