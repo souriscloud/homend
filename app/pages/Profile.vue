@@ -1,10 +1,10 @@
 <template>
-    <DomainPage title="Home">
+    <DomainPage title="Profile">
         <GridLayout>
             <Label verticalAlignment="center" horizontalAlignment="center">
                 <FormattedString>
                     <Span class="fas" text.decode="&#xf135; "/>
-                    <Span :text="'Home'"/>
+                    <Span :text="'Profile'"/>
                 </FormattedString>
             </Label>
         </GridLayout>
@@ -16,14 +16,14 @@ import DomainPage from '~/components/DomainPage'
 import { DrawerNavigationService } from '~/services/drawer-navigation.service'
 
 export default {
-  name: 'Home',
+  name: 'Profile',
 
   components: {
     DomainPage
   },
 
   mounted () {
-    DrawerNavigationService.getInstance().updateActivePage('home')
+    DrawerNavigationService.getInstance().updateActivePage('profile')
   }
 }
 </script>
