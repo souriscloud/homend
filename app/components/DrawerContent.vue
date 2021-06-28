@@ -1,7 +1,8 @@
 <template>
   <GridLayout rows="auto, auto, *" class="nt-drawer__content">
+    <Label row="0" horizontalAlignment="left" verticalAlignment="center" marginTop="15" marginLeft="10" marginBottom="10" fontSize="20" class="fas" :text="'fa-angle-left'|fonticon" @tap="hideDrawer" />
     <Label row="0" :visibility="$store.state.auth.loggedIn ? 'visible' : 'collapsed'"
-           horizontalAlignment="right" verticalAlignment="center" marginTop="25" marginRight="10" marginBottom="10" fontSize="20" @tap="onSignOutTap">
+           horizontalAlignment="right" verticalAlignment="center" marginTop="15" marginRight="10" marginBottom="10" fontSize="20" @tap="onSignOutTap">
       <FormattedString>
         <Span>Sign Out </Span>
         <Span class="fas" :text="'fa-power-off'|fonticon" />
@@ -73,6 +74,10 @@ export default {
         .then(() => {
           DrawerService.hideDrawer()
         })
+    },
+
+    hideDrawer () {
+      DrawerService.hideDrawer()
     },
 
     getNavigationItemClass (page) {
