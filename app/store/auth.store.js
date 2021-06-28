@@ -1,10 +1,14 @@
+import { firebase } from '@nativescript/firebase'
+import { crashlytics } from '@nativescript/firebase/crashlytics'
+
 export default {
   namespaced: true,
 
   state: {
     loggedIn: false,
     busy: false,
-    test: 'abc'
+    test: 'abc',
+    data: {}
   },
 
   mutations: {
@@ -14,23 +18,38 @@ export default {
 
     setLoggedIn (state, loggedIn = true) {
       state.loggedIn = loggedIn
+    },
+
+    setData (state, data = {}) {
+      state.data = data
     }
   },
 
   actions: {
-    async logIn ({ commit }, { success, failure }) {
+    async logIn ({ commit }) {
       commit('setBusy')
-      await (new Promise((res, rej) => { setTimeout(res, 2000) }))
-      commit('setBusy', false)
-      commit('setLoggedIn')
-      if (success) {
-        success()
+      try {
+        const firebaseResult = await firebase.login({
+          type: firebase.LoginType.GOOGLE
+        })
+        console.log('firebase.login OK', firebaseResult)
+        commit('setData', firebaseResult)
+        crashlytics.setUserId(firebaseResult.uid)
+        commit('setLoggedIn')
+        commit('setBusy', false)
+        return true
+      } catch (firebaseError) {
+        console.error('firebase.login error')
+        console.log(firebaseError)
+        commit('setLoggedIn', false)
+        commit('setBusy', false)
+        return false
       }
     },
 
-    logOut ({ commit }, { done }) {
+    async logOut ({ commit }) {
+      await firebase.logout()
       commit('setLoggedIn', false)
-      done()
     }
   }
 }

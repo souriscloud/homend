@@ -18,12 +18,11 @@ export default {
   name: 'AuthPage',
 
   methods: {
-    loginWithGoogle () {
-      this.$store.dispatch('auth/logIn', {
-        success: () => {
-          this.$navigateTo(Home, { clearHistory: true })
-        }
-      })
+    async loginWithGoogle () {
+      const success = await this.$store.dispatch('auth/logIn')
+      if (success) {
+        this.$navigateTo(Home, { clearHistory: true })
+      }
     },
 
     onDrawerButtonTap () {

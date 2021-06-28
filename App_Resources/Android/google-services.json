@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "888312469926",
+    "project_id": "homend-app",
+    "storage_bucket": "homend-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:888312469926:android:9782aa78b076e1bfdad767",
+        "android_client_info": {
+          "package_name": "cloud.souris.homend"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "888312469926-tiprg49g8m5b63fj6q457k49vs7eofb1.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "cloud.souris.homend",
+            "certificate_hash": "729b62fc1fea8eecaca0192195d3528d39ea02f3"
+          }
+        },
+        {
+          "client_id": "888312469926-7gh91bhpqn4mn2gl9r2stshculoff1ue.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC0AiaflFJPpkVKVpGnJG3H_WYJW87OMSE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "888312469926-7gh91bhpqn4mn2gl9r2stshculoff1ue.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "888312469926-t939s0delv8i4grovknaglnn2finmvbi.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "cloud.souris.homend"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

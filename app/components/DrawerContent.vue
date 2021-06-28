@@ -1,6 +1,7 @@
 <template>
   <GridLayout rows="auto, auto, *" class="nt-drawer__content">
-    <Label row="0" :visibility="$store.state.auth.loggedIn ? 'visible' : 'collapsed'" horizontalAlignment="right" verticalAlignment="center" marginTop="10" marginRight="10" marginBottom="10" fontSize="20" @tap="onSignOutTap">
+    <Label row="0" :visibility="$store.state.auth.loggedIn ? 'visible' : 'collapsed'"
+           horizontalAlignment="right" verticalAlignment="center" marginTop="25" marginRight="10" marginBottom="10" fontSize="20" @tap="onSignOutTap">
       <FormattedString>
         <Span>Sign Out </Span>
         <Span class="fas" :text="'fa-power-off'|fonticon" />
@@ -8,8 +9,8 @@
     </Label>
     <StackLayout row="1" class="nt-drawer__header">
       <Label class="nt-drawer__header-image fas" :text="$store.state.auth.loggedIn ? 'fa-birthday-cake' : 'fa-times-circle'|fonticon" @tap="onHeaderImageTap" />
-      <Label :visibility="$store.state.auth.loggedIn ? 'visible' : 'collapsed'" class="nt-drawer__header-brand" text="User Name" />
-      <Label textWrap class="nt-drawer__header-footnote" :text="$store.state.auth.loggedIn ? $store.state.auth.test : `Sign up with google to use HomEnd`" />
+      <Label :visibility="$store.state.auth.loggedIn ? 'visible' : 'collapsed'" class="nt-drawer__header-brand" :text="userNameText" />
+      <Label textWrap class="nt-drawer__header-footnote" :text="emailText" />
     </StackLayout>
 
     <ScrollView :visibility="$store.state.auth.loggedIn ? 'visible' : 'collapsed'" row="2" class="nt-drawer__body">
@@ -29,6 +30,24 @@ import * as DrawerService from '~/services/drawer.service'
 
 export default {
   name: 'DrawerContent',
+
+  computed: {
+    userNameText () {
+      if (this.$store.state.auth.loggedIn) {
+        return this.$store.state.auth.data.displayName
+      }
+
+      return ''
+    },
+
+    emailText () {
+      if (this.$store.state.auth.loggedIn) {
+        return this.$store.state.auth.data.email
+      }
+
+      return 'Sign up with google to use HomEnd'
+    }
+  },
 
   data () {
     return {
@@ -83,12 +102,9 @@ export default {
       }
     },
 
-    onSignOutTap () {
-      this.$store.dispatch('auth/logOut', {
-        done: () => {
-          this.onNavigationItemTap('authPage')
-        }
-      })
+    async onSignOutTap () {
+      await this.$store.dispatch('auth/logOut')
+      this.onNavigationItemTap('authPage')
     }
   },
 

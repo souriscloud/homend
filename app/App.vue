@@ -11,6 +11,7 @@
 
 <script>
 import { SlideInOnTopTransition } from 'nativescript-ui-sidedrawer'
+import { inappmessaging } from '@nativescript/firebase/inappmessaging'
 import DrawerContent from '~/components/DrawerContent'
 import AuthPage from '~/pages/AuthPage'
 
@@ -25,6 +26,18 @@ export default {
     return {
       transition: new SlideInOnTopTransition()
     }
+  },
+
+  created () {
+    inappmessaging.onMessageImpression(message => {
+      console.log('InAppMessaging [shown]')
+      console.log(message)
+    })
+
+    inappmessaging.onMessageClicked(message => {
+      console.log('InAppMessaging [clicked]')
+      console.log(message)
+    })
   }
 }
 </script>
