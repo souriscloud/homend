@@ -56,6 +56,7 @@ export default {
           showNotificationsWhenInForeground: false
         })
         commit('setLoggedIn')
+        console.log(userResponse)
         commit('setBusy', false)
       }
 

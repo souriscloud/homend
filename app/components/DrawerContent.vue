@@ -9,7 +9,7 @@
       </FormattedString>
     </Label>
     <StackLayout row="1" class="nt-drawer__header">
-      <Label class="nt-drawer__header-image fas" :text="$store.state.auth.loggedIn ? 'fa-birthday-cake' : 'fa-times-circle'|fonticon" @tap="onHeaderImageTap" />
+      <Image :visibility="$store.state.auth.loggedIn ? 'visible' : 'collapsed'" class="nt-drawer__header-image" :src="$store.state.auth.loggedIn && $store.state.auth.data.photoURL ? $store.state.auth.data.photoURL : ''" stretch="aspectFill" />
       <Label :visibility="$store.state.auth.loggedIn ? 'visible' : 'collapsed'" class="nt-drawer__header-brand" :text="userNameText" />
       <Label textWrap class="nt-drawer__header-footnote" :text="emailText" />
     </StackLayout>
