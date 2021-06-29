@@ -11,6 +11,9 @@ import store from './store'
 // NativeScript plugins init
 Vue.use(RadSideDrawer)
 
+// Registering elements
+Vue.registerElement('BarcodeView', () => require('@nativescript-community/ui-barcodeview').BarcodeView)
+
 // FontIcon plugin
 FontIcon.paths = {
   fa: './fonts/fa.css'

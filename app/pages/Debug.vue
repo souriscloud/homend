@@ -1,7 +1,8 @@
 <template>
     <DomainPage title="Debug">
-        <GridLayout>
-          <Button @tap="testLocalNotification">Test Local Notification</Button>
+        <GridLayout rows="auto, auto, auto">
+          <Button row="0" @tap="testLocalNotification">Test Local Notification</Button>
+          <BarcodeView row="2" verticalAlignment="center" horizontalAlignment="center" width="200" height="200" @scanResult="onScanResult" />
         </GridLayout>
     </DomainPage>
 </template>
@@ -17,6 +18,10 @@ export default {
 
   components: {
     DomainPage
+  },
+
+  data () {
+    return {}
   },
 
   methods: {
@@ -49,6 +54,12 @@ export default {
           }
         ]
       }])
+    },
+
+    onScanResult ({ format, text }) {
+      console.log('SCANNER GOT RESULT')
+      console.log(text)
+      console.log(format)
     }
   },
 

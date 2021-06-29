@@ -43,5 +43,7 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+  <key>NSCameraUsageDescription</key>
+  <string>For scanning PQRCs / adding trusted client contacts</string>
 </dict>
 </plist>

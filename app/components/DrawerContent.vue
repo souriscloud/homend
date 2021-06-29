@@ -77,6 +77,10 @@ export default {
         .then(() => {
           DrawerService.hideDrawer()
         })
+        .catch(err => {
+          console.error('NavigationERROR')
+          console.log(err)
+        })
     },
 
     hideDrawer () {
