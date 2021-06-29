@@ -8,7 +8,8 @@ export default {
     loggedIn: false,
     busy: false,
     test: 'abc',
-    data: {}
+    data: {},
+    fcmToken: null
   },
 
   mutations: {
@@ -22,11 +23,16 @@ export default {
 
     setData (state, data = {}) {
       state.data = data
+    },
+
+    setFCMToken (state, fcmToken = null) {
+      state.fcmToken = fcmToken
+      console.log('FCMToken was updated to:', fcmToken)
     }
   },
 
   actions: {
-    async logIn ({ commit }) {
+    async logIn ({ commit, dispatch }) {
       commit('setBusy')
       try {
         const firebaseResult = await firebase.login({
@@ -35,6 +41,18 @@ export default {
         console.log('firebase.login OK', firebaseResult)
         commit('setData', firebaseResult)
         crashlytics.setUserId(firebaseResult.uid)
+        await firebase.registerForPushNotifications({
+          onPushTokenReceivedCallback: fcmToken => {
+            dispatch('fcmTokenReceived', { fcmToken })
+          },
+          showNotifications: true,
+          showNotificationsWhenInForeground: true,
+          onMessageReceivedCallback: message => {
+            console.log('message received')
+            console.log(message)
+          }
+        })
+        console.log('FCM registered')
         commit('setLoggedIn')
         commit('setBusy', false)
         return true
@@ -49,7 +67,12 @@ export default {
 
     async logOut ({ commit }) {
       await firebase.logout()
+      await firebase.unregisterForPushNotifications()
       commit('setLoggedIn', false)
+    },
+
+    fcmTokenReceived({ commit }, { fcmToken }) {
+      commit('setFCMToken', fcmToken)
     }
   }
 }

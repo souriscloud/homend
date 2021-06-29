@@ -11,6 +11,7 @@
 
 <script>
 import { SlideInOnTopTransition } from 'nativescript-ui-sidedrawer'
+import { firebase } from '@nativescript/firebase'
 import { inappmessaging } from '@nativescript/firebase/inappmessaging'
 import DrawerContent from '~/components/DrawerContent'
 import AuthPage from '~/pages/AuthPage'
