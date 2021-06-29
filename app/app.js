@@ -21,7 +21,10 @@ Vue.filter('fonticon', fonticon)
 let vueFirebaseWasInit = false
 
 // Firebase
-firebase.init({})
+firebase.init({
+  showNotifications: false,
+  showNotificationsWhenInForeground: false
+})
   .then(() => {
     vueFirebaseWasInit = true
   })

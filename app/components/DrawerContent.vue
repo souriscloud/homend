@@ -60,6 +60,9 @@ export default {
         },
         profile: {
           title: 'Profile'
+        },
+        debug: {
+          title: 'Debug'
         }
       }
     }
