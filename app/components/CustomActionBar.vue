@@ -1,7 +1,7 @@
 <template>
-  <ActionBar flat="true">
-    <NavigationButton visibility="collapsed" />
-    <GridLayout columns="auto, *, auto" width="100%" marginTop="5">
+  <ActionBar class="action-bar" :flat="true">
+    <NavigationButton :visibility="'collapsed'" width="0" height="0" />
+    <GridLayout class="action-bar--view" rows="*" columns="auto, *, auto">
 <!--  COLUMN 1 -->
       <Label :visibility="back ? 'collapsed' : 'visible'" class="fas" :text="'fa-bars'|fonticon" col="0" @tap="onDrawerButtonTap" />
       <Label :visibility="back ? 'visible' : 'collapsed'" class="fas" :text="'fa-chevron-left'|fonticon" col="0" @tap="onBackButtonTap" />
@@ -10,7 +10,9 @@
       <Label :text="title" col="0" colSpan="3" horizontalAlignment="center" verticalAlignment="center" />
 
 <!--  COLUMN 2 -->
-<!--      <Label class="fas" :text="'fa-bars'|fonticon" col="2" />-->
+      <GridLayout col="2" marginRight="5" marginTop="2">
+        <Label class="fas" verticalAlignment="center" horizontalAlignment="center" :text="'fa-address-book'|fonticon" @tap="onRightButtonTap" />
+      </GridLayout>
     </GridLayout>
   </ActionBar>
 </template>
@@ -32,6 +34,12 @@ export default {
     }
   },
 
+  computed: {
+    isLoggedIn () {
+      return this.$store.state.auth.loggedIn
+    }
+  },
+
   methods: {
     onDrawerButtonTap () {
       DrawerService.showDrawer()
@@ -39,11 +47,25 @@ export default {
 
     onBackButtonTap () {
       this.$navigateBack()
+    },
+
+    onRightButtonTap () {
+      this.$store.dispatch('auth/addFriend')
     }
   }
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+.action-bar {
+  margin: 0;
+  padding: 0;
 
+  background-color: #dfdfdf;
+
+  &--view {
+    width: 100%;
+    height: 100%;
+  }
+}
 </style>

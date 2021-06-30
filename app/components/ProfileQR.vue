@@ -21,7 +21,7 @@ export default {
   methods: {
     onImageLoaded (args) {
       const image = args.object
-      const result = new QrGenerator().generate(this.$store.state.auth.fcmToken, {
+      const result = new QrGenerator().generate(this.$store.state.auth.data.uid, {
         size: {
           width: 250,
           height: 250

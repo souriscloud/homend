@@ -1,5 +1,6 @@
 import { firebase } from '@nativescript/firebase'
 import { crashlytics } from '@nativescript/firebase/crashlytics'
+import { createOrFetchUser, updateFCM, updateFriendList } from '~/api/users.api'
 
 export default {
   namespaced: true,
@@ -8,6 +9,7 @@ export default {
     loggedIn: false,
     busy: false,
     data: {},
+    storeData: {},
     fcmToken: null
   },
 
@@ -24,9 +26,17 @@ export default {
       state.data = data
     },
 
+    setStoreData (state, storeData = {}) {
+      state.storeData = storeData
+    },
+
     setFCMToken (state, fcmToken = null) {
       state.fcmToken = fcmToken
       console.log('[Firebase] [FCM] Token was updated to:', fcmToken)
+    },
+
+    setFriendList(state, friendList = []) {
+      state.storeData.friendList = friendList
     }
   },
 
@@ -47,16 +57,23 @@ export default {
       const onLoginSuccess = async userResponse => {
         console.log('[Firebase] [GoogleAuth] User is authenticated!')
         commit('setData', userResponse)
+        let firestoreUser = await createOrFetchUser(userResponse)
+        commit('setStoreData', firestoreUser)
         crashlytics.setUserId(userResponse.uid)
         await firebase.registerForPushNotifications({
-          onPushTokenReceivedCallback: fcmToken => {
+          onPushTokenReceivedCallback: async fcmToken => {
             dispatch('fcmTokenReceived', { fcmToken })
+            if (!firestoreUser.fcmToken || firestoreUser.fcmToken !== fcmToken) {
+              console.log('[Firebase] [Firestore] Updating user token!')
+              await updateFCM(userResponse.uid, fcmToken)
+              let firestoreUser = await createOrFetchUser(userResponse)
+              commit('setStoreData', firestoreUser)
+            }
           },
           showNotifications: false,
           showNotificationsWhenInForeground: false
         })
         commit('setLoggedIn')
-        console.log(userResponse)
         commit('setBusy', false)
       }
 
@@ -90,6 +107,16 @@ export default {
 
     fcmTokenReceived({ commit }, { fcmToken }) {
       commit('setFCMToken', fcmToken)
+    },
+
+    async addFriend ({ commit, state }, friendUID) {
+      if (state.storeData.friendList && state.storeData.friendList.includes(friendUID)) {
+        return
+      }
+
+      const friendList = [...state.storeData.friendList, friendUID]
+      commit('setFriendList', friendList)
+      await updateFriendList(friendUID, friendList)
     }
   }
 }
