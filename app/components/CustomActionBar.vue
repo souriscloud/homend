@@ -20,6 +20,7 @@
 <script>
 import FriendListBottomSheet from '~/components/FriendListBottomSheet'
 import * as DrawerService from '~/services/drawer.service'
+import { TNSFancyAlert } from '@nstudio/nativescript-fancyalert'
 
 export default {
   name: 'CustomActionBar',
@@ -56,7 +57,11 @@ export default {
       })
       switch (option.action) {
         case 'add':
-          console.log('add friend')
+          const fancyResult = await TNSFancyAlert.showSuccess('Friend Added!', 'You have successfully added a friend!', 'OK!')
+            console.log('after success')
+          if (fancyResult) {
+            console.log(fancyResult)
+          }
           break
         case 'option':
           console.log('open chat with', option.option)
