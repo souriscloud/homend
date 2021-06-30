@@ -20,7 +20,27 @@ export default class GenericDb {
 
   async read (id) {
     const result = await this.collectionRef.doc(id).get()
-    return result.exists ? result.data() : null
+    return result.exists ? {
+      id,
+      ...result.data()
+    } : null
+  }
+
+  async readAll (constraints = null) {
+    let query = this.collectionRef
+    if (constraints) {
+      constraints.forEach(constraint => {
+        query = query.where(...constraint)
+      })
+    }
+
+    const result = await query.get()
+    return result.docs.map(docRef => {
+      return {
+        id: docRef.id,
+        ...docRef.data()
+      }
+    })
   }
 
   async update (id, data) {

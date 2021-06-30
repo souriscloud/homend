@@ -52,23 +52,35 @@ export default {
     },
 
     async onRightButtonTap () {
-      const option = await this.$showBottomSheet(FriendListBottomSheet, {
-        animated: true
-      })
-      switch (option.action) {
-        case 'add':
-          const fancyResult = await TNSFancyAlert.showSuccess('Friend Added!', 'You have successfully added a friend!', 'OK!')
+      try {
+        const option = await this.$showBottomSheet(FriendListBottomSheet, {
+          animated: true
+        })
+        if (!option) return
+        switch (option.action) {
+          case 'add':
+            const fancyResult = await TNSFancyAlert.showSuccess('Friend Added!', 'You have successfully added a friend!', 'OK!')
             console.log('after success')
-          if (fancyResult) {
-            console.log(fancyResult)
-          }
-          break
-        case 'option':
-          console.log('open chat with', option.option)
-          break
-        default:
-          console.log('error onRightButtonTap')
-          break;
+            if (fancyResult) {
+              console.log(fancyResult)
+            }
+            break
+          case 'option':
+            const friendData = this.$store.state.channels.friends.filter(fr => fr.id === option.option)[0]
+            console.log('friendData', friendData)
+            if (friendData) {
+              this.$navigateTo(require('~/pages/Friend').default, { clearHistory: true, props: { friendData } })
+            } else {
+              console.log('No friend index')
+            }
+            break
+          default:
+            console.log('error onRightButtonTap')
+            break;
+        }
+      } catch (err) {
+        console.log('errrrrrrr')
+        console.log(err)
       }
     }
   }
