@@ -4,12 +4,18 @@ import Vue from 'nativescript-vue'
 import { FontIcon, fonticon } from '@nativescript-community/fonticon'
 import RadSideDrawer from 'nativescript-ui-sidedrawer/vue'
 import { firebase } from '@nativescript/firebase'
+import { install as installBottomSheet } from '@nativescript-community/ui-material-bottomsheet'
+import BottomSheetPlugin from '@nativescript-community/ui-material-bottomsheet/vue'
 
 import App from './App'
 import store from './store'
 
+// Wiring
+installBottomSheet()
+
 // NativeScript plugins init
 Vue.use(RadSideDrawer)
+Vue.use(BottomSheetPlugin)
 
 // Registering elements
 Vue.registerElement('BarcodeView', () => require('@nativescript-community/ui-barcodeview').BarcodeView)

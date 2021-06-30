@@ -18,6 +18,7 @@
 </template>
 
 <script>
+import FriendListBottomSheet from '~/components/FriendListBottomSheet'
 import * as DrawerService from '~/services/drawer.service'
 
 export default {
@@ -49,8 +50,21 @@ export default {
       this.$navigateBack()
     },
 
-    onRightButtonTap () {
-      this.$store.dispatch('auth/addFriend')
+    async onRightButtonTap () {
+      const option = await this.$showBottomSheet(FriendListBottomSheet, {
+        animated: true
+      })
+      switch (option.action) {
+        case 'add':
+          console.log('add friend')
+          break
+        case 'option':
+          console.log('open chat with', option.option)
+          break
+        default:
+          console.log('error onRightButtonTap')
+          break;
+      }
     }
   }
 }
