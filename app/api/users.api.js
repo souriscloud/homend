@@ -23,4 +23,8 @@ export async function updateFriendList (uid, friendList = []) {
   await new UsersDb().update(uid, { friendList })
 }
 
+export async function isUserValid (uid) {
+  return await new UsersDb().read(uid) !== null
+}
+
 // export async function watchFriendlist ()

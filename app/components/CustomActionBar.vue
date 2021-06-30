@@ -59,17 +59,13 @@ export default {
         if (!option) return
         switch (option.action) {
           case 'add':
-            const fancyResult = await TNSFancyAlert.showSuccess('Friend Added!', 'You have successfully added a friend!', 'OK!')
-            console.log('after success')
-            if (fancyResult) {
-              console.log(fancyResult)
-            }
+            await this.$navigateTo(require('~/pages/AddFriend').default, { clearHistory: true })
             break
           case 'option':
             const friendData = this.$store.state.channels.friends.filter(fr => fr.id === option.option)[0]
             console.log('friendData', friendData)
             if (friendData) {
-              this.$navigateTo(require('~/pages/Friend').default, { clearHistory: true, props: { friendData } })
+              await this.$navigateTo(require('~/pages/Friend').default, { clearHistory: true, props: { friendData } })
             } else {
               console.log('No friend index')
             }

@@ -2,7 +2,7 @@
     <DomainPage title="Debug">
         <GridLayout rows="auto, auto, auto">
           <Button row="0" @tap="testLocalNotification">Test Local Notification</Button>
-          <BarcodeView row="2" verticalAlignment="center" horizontalAlignment="center" width="200" height="200" @scanResult="onScanResult" />
+<!--          <BarcodeView row="2" verticalAlignment="center" horizontalAlignment="center" width="200" height="200" @scanResult="onScanResult" />-->
         </GridLayout>
     </DomainPage>
 </template>

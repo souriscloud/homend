@@ -1,13 +1,13 @@
 <template>
-    <DomainPage :title="friendData.displayName || 'asd'">
+    <DomainPage :title="friendData.displayName">
         <GridLayout>
             <GridLayout columns="*" rows="auto, auto, auto, auto, auto, auto" marginLeft="25" marginRight="25" marginTop="25">
-              <Label row="0">Display Name: {{ friendData.displayName || 'asd' }}</Label>
-              <Label row="1">E-Mail: {{ friendData.email || 'asd' }}</Label>
-              <Label row="2">UID: {{ friendData.id || 'asd' }}</Label>
-              <Label row="3" textWrap>FCM: {{ friendData.fcmToken || 'no' }}</Label>
-              <Button row="4">Send notification</Button>
-              <Button row="5">Open chat</Button>
+              <Label row="0">Display Name: {{ friendData.displayName }}</Label>
+              <Label row="1">E-Mail: {{ friendData.email }}</Label>
+              <Label row="2">UID: {{ friendData.id }}</Label>
+              <Label row="3" textWrap>FCM: {{ friendData.fcmToken }}</Label>
+              <Button row="4" @tap="sendNotification">Send notification</Button>
+              <Button row="5" @tap="openChat">Open chat</Button>
             </GridLayout>
         </GridLayout>
     </DomainPage>

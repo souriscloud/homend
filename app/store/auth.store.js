@@ -1,6 +1,6 @@
 import { firebase } from '@nativescript/firebase'
 import { crashlytics } from '@nativescript/firebase/crashlytics'
-import { createOrFetchUser, updateFCM, updateFriendList } from '~/api/users.api'
+import { createOrFetchUser, updateFCM, updateFriendList, isUserValid } from '~/api/users.api'
 
 export default {
   namespaced: true,
@@ -98,6 +98,11 @@ export default {
       }
     },
 
+    async reloadStoreData ({ commit, state }) {
+      let firestoreUser = await createOrFetchUser(state.data.uid)
+      commit('setStoreData', firestoreUser)
+    },
+
     async logOut ({ commit }) {
       await firebase.logout()
       await firebase.unregisterForPushNotifications()
@@ -109,14 +114,21 @@ export default {
       commit('setFCMToken', fcmToken)
     },
 
-    async addFriend ({ commit, state }, friendUID) {
+    async addFriend ({ commit, state }, { friendUID }) {
       if (state.storeData.friendList && state.storeData.friendList.includes(friendUID)) {
-        return
+        console.log('user exists')
+        return false
       }
 
-      const friendList = [...state.storeData.friendList, friendUID]
+      if (!await isUserValid(friendUID)) {
+        console.log('not valid user')
+        return false
+      }
+
+      const friendList = [...state.storeData.friendList || [], friendUID]
       commit('setFriendList', friendList)
-      await updateFriendList(friendUID, friendList)
+      await updateFriendList(state.data.uid, friendList)
+      return true
     }
   }
 }
