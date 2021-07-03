@@ -15,7 +15,9 @@
 
 <script>
 import DomainPage from '~/components/DomainPage'
+import SendNotificationBottomSheet from '~/components/SendNotificationBottomSheet'
 import { DrawerNavigationService } from '~/services/drawer-navigation.service'
+import { TNSFancyAlert } from '@nstudio/nativescript-fancyalert'
 
 export default {
   name: 'Friend',
@@ -35,8 +37,17 @@ export default {
   },
 
   methods: {
-    sendNotification () {
-      console.log('navigate to send notification')
+    async sendNotification () {
+      await this.$store.dispatch('channels/setTarget', this.friendData)
+      const success = await this.$showBottomSheet(SendNotificationBottomSheet, {
+        animated: true
+      })
+      if (success) {
+        console.log('success')
+      } else {
+        console.log('not success')
+      }
+      await this.$store.dispatch('channels/resetTarget')
     },
     openChat () {
       console.log('navigate to chat')

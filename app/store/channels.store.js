@@ -5,12 +5,17 @@ export default {
   namespaced: true,
 
   state: {
-    friends: new ObservableArray([])
+    friends: new ObservableArray([]),
+    target: null
   },
 
   mutations: {
     updateFriends (state, friends = []) {
       state.friends = new ObservableArray(friends)
+    },
+
+    setTarget (state, target = null) {
+      state.target = target
     }
   },
 
@@ -19,6 +24,14 @@ export default {
       const retrieved = await retrieveFriendsFromFriendList(rootState.auth.storeData.friendList)
       console.log('[Channels] FriendList refreshed!')
       commit('updateFriends', retrieved)
+    },
+
+    resetTarget ({ commit }) {
+      commit('setTarget')
+    },
+
+    setTarget ({ commit }, target) {
+      commit('setTarget', target)
     }
   }
 }

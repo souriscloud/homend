@@ -2,8 +2,8 @@
   <Page class="page" :actionBarHidden="true">
     <GridLayout width="100%" height="100%">
       <GridLayout horizontalAlignment="center" verticalAlignment="center" rows="auto" columns="auto">
-        <ActivityIndicator row="0" col="0" :busy="$store.state.auth.isBusy" color="Green" />
-        <Label row="0" col="0" :visibility="$store.state.auth.isBusy ? 'collapsed' : 'visible'">You have to sign in using Google account!</Label>
+        <ActivityIndicator row="0" col="0" :busy="$store.state.auth.busy" color="Green" />
+        <Label row="0" col="0" :visibility="$store.state.auth.busy ? 'collapsed' : 'visible'">You have to sign in using Google account!</Label>
       </GridLayout>
     </GridLayout>
   </Page>

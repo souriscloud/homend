@@ -20,7 +20,6 @@
 <script>
 import FriendListBottomSheet from '~/components/FriendListBottomSheet'
 import * as DrawerService from '~/services/drawer.service'
-import { TNSFancyAlert } from '@nstudio/nativescript-fancyalert'
 
 export default {
   name: 'CustomActionBar',

@@ -45,8 +45,11 @@ export default {
     })
 
     await LocalNotifications.addOnMessageReceivedCallback(notificationData => {
-      console.log('notification received vole')
-      console.log(notificationData)
+      if (notificationData.event === 'button' && notificationData.response === 'yes') {
+        console.log('Open reply dialog')
+      } else {
+        console.log('notification just consumed, no other actions taken')
+      }
     })
 
     await AsyncDelay(200)
@@ -54,13 +57,13 @@ export default {
 
     if (this.allowNotifications) {
       await firebase.addOnMessageReceivedCallback(message => {
-        // if (message.foreground) {
-          // console.log('received foreground notworking notification so scheduling it 5secs from now')
+        if (message.foreground) {
+          console.log('received foreground notworking notification so scheduling it 5secs from now')
           console.log(message)
           LocalNotifications.schedule([{
             id: message['google.message_id'],
-            title: `New message from '${message.data['homend_sender']}'`,
-            body: `Here is text: ${message.data['homend_message']}`,
+            title: message.data['homend_sender'],
+            body: message.data['homend_message'],
             bigTextStyle: true,
             color: new Color('green'),
             thumbnail: 'res://icon',
@@ -82,9 +85,10 @@ export default {
               }
             ]
           }])
-        // } else {
-        //   console.log('should we do now some deeplinking or something? :-)')
-        // }
+        } else {
+          console.log('probably background notification, so it was shown in android by default')
+          console.log(message)
+        }
       })
     }
   }
