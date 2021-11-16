@@ -50,6 +50,7 @@ export default {
           this.messageText.trim()
         )
         console.log(response.content)
+        success = true
       } catch (fcmError) {
         success = false
         console.log('error on sending fcm notification thru relay')

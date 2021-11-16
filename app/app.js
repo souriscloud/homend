@@ -7,6 +7,8 @@ import BottomSheetPlugin from '@nativescript-community/ui-material-bottomsheet/v
 import { install as installBottomSheet } from '@nativescript-community/ui-material-bottomsheet'
 import CollectionView from '@nativescript-community/ui-collectionview/vue'
 import { firebase } from '@nativescript/firebase'
+import { Theme } from '@nativescript/theme'
+import { wireMomentJs } from '~/utils'
 
 import App from './App'
 import store from './store'
@@ -28,6 +30,12 @@ FontIcon.paths = {
 }
 FontIcon.loadCss()
 Vue.filter('fonticon', fonticon)
+
+// Force Light theme
+Theme.setMode(Theme.Light)
+
+// MomentJS locale
+wireMomentJs()
 
 let vueFirebaseWasInit = false
 

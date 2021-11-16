@@ -62,7 +62,6 @@ export default {
             break
           case 'option':
             const friendData = this.$store.state.channels.friends.filter(fr => fr.id === option.option)[0]
-            console.log('friendData', friendData)
             if (friendData) {
               await this.$navigateTo(require('~/pages/Friend').default, { clearHistory: true, props: { friendData } })
             } else {

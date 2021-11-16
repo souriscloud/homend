@@ -2,6 +2,8 @@
     <DomainPage title="Debug">
         <GridLayout rows="auto, auto, auto">
           <Button row="0" @tap="testLocalNotification">Test Local Notification</Button>
+          <Button row="1" @tap="testWayOne">Test Way Two</Button>
+          <Button row="2" @tap="testWayTwo">Test Way One</Button>
 <!--          <BarcodeView row="2" verticalAlignment="center" horizontalAlignment="center" width="200" height="200" @scanResult="onScanResult" />-->
         </GridLayout>
     </DomainPage>
@@ -60,6 +62,14 @@ export default {
       console.log('SCANNER GOT RESULT')
       console.log(text)
       console.log(format)
+    },
+
+    async testWayOne () {
+      await this.$store.dispatch('channels/playMessageReceivedEvents')
+    },
+
+    testWayTwo () {
+
     }
   },
 

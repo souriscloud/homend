@@ -20,6 +20,10 @@
           <Label col="0" class="nt-icon fas" :text="'fa-home'|fonticon" />
           <Label col="1" class="p-r-10" :text="navigationItem.title" />
         </GridLayout>
+        <GridLayout key="navitem-omnichat" columns="auto, *" :class="getNavigationItemClass('omnichat')" @tap="navigateOmniChat">
+          <Label col="0" class="nt-icon fas" :text="'fa-home'|fonticon" />
+          <Label col="1" class="p-r-10" text="OmniChat" />
+        </GridLayout>
       </StackLayout>
     </ScrollView>
   </GridLayout>
@@ -28,6 +32,7 @@
 <script>
 import { DrawerNavigationService } from '~/services/drawer-navigation.service'
 import * as DrawerService from '~/services/drawer.service'
+import Chat from '~/pages/Chat'
 
 export default {
   name: 'DrawerContent',
@@ -81,6 +86,14 @@ export default {
           console.error('NavigationERROR')
           console.log(err)
         })
+    },
+
+    async navigateOmniChat () {
+      console.log('navigating to omnichat page')
+      await this.$store.dispatch('channels/selectOmniChannel')
+      this.$navigateTo(Chat, {}).then(() => {
+        DrawerService.hideDrawer()
+      }).catch(err => console.error(err))
     },
 
     hideDrawer () {

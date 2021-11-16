@@ -15,6 +15,7 @@
 
 <script>
 import DomainPage from '~/components/DomainPage'
+import Chat from '~/pages/Chat'
 import SendNotificationBottomSheet from '~/components/SendNotificationBottomSheet'
 import { DrawerNavigationService } from '~/services/drawer-navigation.service'
 import { TNSFancyAlert } from '@nstudio/nativescript-fancyalert'
@@ -49,8 +50,10 @@ export default {
       }
       await this.$store.dispatch('channels/resetTarget')
     },
-    openChat () {
-      console.log('navigate to chat')
+
+    async openChat () {
+      await this.$store.dispatch('channels/switchChannel', this.friendData.id)
+      this.$navigateTo(Chat, {}).catch(err => console.error(err))
     }
   },
 

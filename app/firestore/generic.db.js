@@ -26,12 +26,16 @@ export default class GenericDb {
     } : null
   }
 
-  async readAll (constraints = null) {
+  async readAll (constraints = null, ordering = null) {
     let query = this.collectionRef
     if (constraints) {
       constraints.forEach(constraint => {
         query = query.where(...constraint)
       })
+    }
+    if (ordering) {
+      if (!ordering.dir) ordering.dir = 'desc'
+      query = query.orderBy(ordering.path, ordering.dir)
     }
 
     const result = await query.get()
@@ -51,5 +55,37 @@ export default class GenericDb {
 
   async delete (id) {
     return await this.collectionRef.doc(id).delete()
+  }
+
+  subscribeSnapshotListener (onSnapshot) {
+    // call returned callback to unsubscribe (const a = subscribeSnapshotListener(snap=>snap.forEach(b=>b.console.log)); -- unsubscribe with a();)
+    return this.collectionRef.onSnapshot(onSnapshot)
+  }
+
+  generateSnapshotCallback (mappedCallback) {
+    return async snapshot => {
+      console.log('on generated snapshot callback')
+      let arr = []
+      snapshot.forEach(docRef => {
+        const doc = {
+          id: docRef.id,
+          ...docRef.data()
+        }
+        arr.push(this.saltDocument(doc))
+      })
+      arr = await Promise.all(arr)
+      arr.sort((a, b) => {
+        return a.sent_at < b.sent_at ? -1 : 1
+      })
+      mappedCallback(arr)
+    }
+  }
+
+  async saltDocument (doc) {
+    return doc
+  }
+
+  simpleSub (mapped) {
+    return this.subscribeSnapshotListener(this.generateSnapshotCallback(mapped))
   }
 }

@@ -1,7 +1,5 @@
 import GenericDb from '~/firestore/generic.db'
 
-const constraintEqual = (property, equalTo) => ([property, '==', equalTo])
-
 export default class UsersDb extends GenericDb {
   constructor () {
     super('users')

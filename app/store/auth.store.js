@@ -1,6 +1,7 @@
 import { firebase } from '@nativescript/firebase'
 import { crashlytics } from '@nativescript/firebase/crashlytics'
-import { createOrFetchUser, updateFCM, updateFriendList, isUserValid } from '~/api/users.api'
+import {createOrFetchUser, updateFCM, updateFriendList, isUserValid, updateChannelList} from '~/api/users.api'
+import {isChannelValid} from "~/api/channels.api";
 
 export default {
   namespaced: true,
@@ -37,6 +38,10 @@ export default {
 
     setFriendList(state, friendList = []) {
       state.storeData.friendList = friendList
+    },
+
+    setChannelList(state, channelList = []) {
+      state.storeData.channelList = channelList
     }
   },
 
@@ -73,6 +78,7 @@ export default {
           showNotifications: false,
           showNotificationsWhenInForeground: false
         })
+        dispatch('channels/loadChannels', null, { root: true })
         commit('setLoggedIn')
         commit('setBusy', false)
       }
@@ -128,6 +134,23 @@ export default {
       const friendList = [...state.storeData.friendList || [], friendUID]
       commit('setFriendList', friendList)
       await updateFriendList(state.data.uid, friendList)
+      return true
+    },
+
+    async addChannel ({ commit, state }, channelId) {
+      if (state.storeData.channelList && state.storeData.channelList.includes(channelId)) {
+        console.log('channel already added')
+        return false
+      }
+
+      if (!await isChannelValid(channelId)) {
+        console.log('not valid channel')
+        return false
+      }
+
+      const channelList = [...state.storeData.channelList || [], channelId]
+      commit('setChannelList', channelList)
+      await updateChannelList(state.data.uid, channelList)
       return true
     }
   }
